@@ -27,10 +27,10 @@ class NewsManager: ObservableObject {
         
         request.httpMethod = "GET"
 //        request.addValue("mental-health-info-api.p.rapidapi.com", forHTTPHeaderField: "X-RapidAPI-Host")
-//        request.addValue("4356d1995cmshcb3a848e79b4040p1adfa3jsn866463cb3957", forHTTPHeaderField: "X-RapidAPI-Key")
+//        request.addValue("key-here", forHTTPHeaderField: "X-RapidAPI-Key")
         
         let headers = [
-            "X-RapidAPI-Key": "4356d1995cmshcb3a848e79b4040p1adfa3jsn866463cb3957",
+            "X-RapidAPI-Key": "key-here", //change to KEY
             "X-RapidAPI-Host": "mental-health-info-api.p.rapidapi.com"
         ]
         
