@@ -8,14 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject var mentalHealthNews = NewsManager()
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            if let news = mentalHealthNews.news {
+                Text(news.title)
+                    .padding()
+            } else {
+                ProgressView()
+                    .progressViewStyle(.circular)
+            }
         }
-        .padding()
+        .onAppear {
+            mentalHealthNews.getNews()
+        }
     }
 }
 
