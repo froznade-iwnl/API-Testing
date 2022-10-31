@@ -9,20 +9,66 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var mentalHealthNews = NewsManager()
+    @StateObject var datas = NewsCollector()
+    @Environment(\.openURL) private var openURL
     
     var body: some View {
-        VStack {
-            if let news = mentalHealthNews.news {
-                Text(news.title)
-                    .padding()
-            } else {
-                ProgressView()
-                    .progressViewStyle(.circular)
+        
+        ZStack {
+            
+            Color.green
+                .ignoresSafeArea(.all)
+            
+            NavigationView {
+                
+    //            HStack {
+    //                Text("Mental Health News")
+    //                    .font(.title)
+    //                    .bold()
+    //
+    //                Spacer()
+    //
+    //            }
+                
+                List {
+                    ForEach(datas.newsData) { data in
+                        VStack(alignment: .leading){
+                            Text(data.title)
+                                .font(.body)
+                                .lineLimit(5)
+                            
+                            HStack {
+                                Text(data.source)
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                    .italic()
+                                .padding(.top, 2)
+                                
+                                Spacer()
+                                
+                                Text("Read more")
+                                    .font(.caption)
+                                    .foregroundColor(.blue)
+                                    .underline()
+                                
+                            }
+                            
+                        }.onTapGesture {
+                            openURL(URL(string: data.url)!)
+                        }
+                        
+                    }
+                }
+                .navigationTitle("Mental Health News")
+                .environmentObject(datas)
+                .onAppear {
+    //                data.getData() { response, error in
+    //                    print(response)
+    //                }
+                    datas.getData()
+                }
+                
             }
-        }
-        .onAppear {
-            mentalHealthNews.getNews()
         }
     }
 }
